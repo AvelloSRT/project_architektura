@@ -11,14 +11,15 @@
     DX<input type="text" id="i4" value="24" tabindex="9" maxlength="2" pattern="[0-9a-fA-F]+"><br />
     </div>
     <div id="long">
-        <p> Wybierz pierwszy rejestr</p>
+        <p><strong>Wybierz pierwszy rejestr</strong></p>
         <select id="sel1">
             <option value="1">AX</option>
             <option value="2">BX</option>
             <option value="3">CX</option>
             <option value="4">DX</option>
         </select><br />
-        <p> Wybierz drugi rejestr</p>
+        <p><strong> Wybierz drugi rejestr</strong></p>
+        <input type="number" id="tab" placeholder="Numer na stosie"><h>LUB</h>
         <select id="sel2">
             <option value="1">AX</option>
             <option value="2">BX</option>
@@ -36,8 +37,9 @@
     </div>
     <div class="four">
         <h1>Do Bazy</h1>
-    <button type="button" onclick="b_mov1()">MOV1</button>
-    <button type="button" onclick="b_xch1()">XCHG</button><br />
+    <button type="button" onclick="b_mov1()">MOV</button>
+    <button type="button" onclick="b_xch1()">XCHG</button>
+    <br />
     
 
     </div>
@@ -103,18 +105,14 @@
 //mov do bazy
         function b_mov1(){
             let sel1 = document.getElementById('sel1').value;
+            let l2 = document.getElementById("tab").value;
             let l1 = bz1.length;
-            for(i=1;i<=sel1;i++){
-                    rj1="i"+i;
-                    }
-            
-                   
+            for(i=1;i<=sel1;i++){rj1="i"+i;}
+            let rj1 = "i"+sel1
             console.log("rj1: "+rj1);
             let x1 = document.getElementById(rj1).value;
-            if(x1.match(hex)){
-            console.log(x1);
-            
-            bz1[l1] = x1;
+            if(x1.match(hex) && l2<l1 && l2!=null){            
+            bz1[l2] = x1;
             console.log(bz1);
         }
         }
@@ -122,16 +120,17 @@
         function b_xch1(){
             let sel1 = document.getElementById('sel1').value;
             let l1 = bz1.length-1;
+            
             for(i=1;i<=sel1;i++){
                     rj1="i"+i;
                     }  
             console.log("rj1: "+rj1);
             let x1 = document.getElementById(rj1).value;
-            if(x1.match(hex)){
-            console.log(x1);
+            let l2 = document.getElementById("tab").value;
+            if(x1.match(hex) && l2<=l1 && l2!=null){
             bx1=x1;
-            document.getElementById(rj1).value=bz1[l1];
-            bz1[l1] = bx1;
+            document.getElementById(rj1).value=bz1[l2];
+            bz1[l2] = bx1;
             console.log(bz1);
         }
         }
@@ -142,7 +141,7 @@
             for(i=1;i<=sel1;i++){
                     rj1="i"+i;
                     }
-                    let bz = bz1.shift();
+                    let bz = bz1.pop();
                 document.getElementById(rj1).value=bz;
                 console.log(bz1);
         }
@@ -154,7 +153,7 @@
                     rj1="i"+i;
                     }
                     let x1 = document.getElementById(rj1).value;
-                bz1[0]=x1;
+                bz1.push(x1);
                 console.log(bz1);
         }
         
@@ -163,14 +162,27 @@
         button{
             width: 60px;
             height: 40px;
+            border-radius: 20px;
+            border:3px darkblue dashed;
+            background-color: lightblue;
+            margin-bottom: 10px;
+            font-weight:bold;
         }
         .four{
             float:left;
             width: 33%;
             text-align: center;
+            border:red 1px solid;
+            margin-right: 1px;
+            border-radius: 100px;
+            background-color: #C0C0C0;
         }
         .inp{
             text-align: center;
+            padding-top:25px;
+            background-color: rgba(255, 94, 72, 0.596);
+            padding: 25px 0 25px 0;
+            border-radius: 30px;
         }
         input{
             text-align: right;
@@ -178,11 +190,22 @@
         h1{
             text-decoration: underline;
             font-size: 25px;
+            background-color: white;
+            border-radius: 20px;
+            width: 50%;
+            margin: auto;
+            margin-top: 10px;
+            padding:10px 0 10px 0;
+            margin-bottom: 10px;
+            
         }
         #long{
             width: 100%;
             text-align: center;
             height: 150px;
+        }
+        #tab{
+            width:12%;
         }
     </style>
 </body>
